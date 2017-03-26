@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Morphology", "Morphology\Morphology.csproj", "{EB62B732-19C6-43B9-AAE2-0AAEFE3140F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Morphology.Test", "Morphology.Test\Morphology.Test.csproj", "{AD26726C-BAD1-4ED5-BAA0-28202B9E69F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{7C2D4252-912E-440C-B498-B757F5793C0D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB62B732-19C6-43B9-AAE2-0AAEFE3140F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB62B732-19C6-43B9-AAE2-0AAEFE3140F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB62B732-19C6-43B9-AAE2-0AAEFE3140F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB62B732-19C6-43B9-AAE2-0AAEFE3140F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD26726C-BAD1-4ED5-BAA0-28202B9E69F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD26726C-BAD1-4ED5-BAA0-28202B9E69F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD26726C-BAD1-4ED5-BAA0-28202B9E69F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD26726C-BAD1-4ED5-BAA0-28202B9E69F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
