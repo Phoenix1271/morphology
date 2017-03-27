@@ -1,40 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Morphology.Conversion.Tokens;
+using Morphology.Extensions;
 
 namespace Morphology.Conversion.Policies
 {
     /// <summary>
-    /// Determine if the supplied value is represented as simple Scalar value.
+    /// Determine if the supplied value is represented as Sequence of property tokens.
     /// </summary>
-    public sealed class ScalarConversionPolicy : IConversionPolicy
+    public sealed class CollectionConversionPolicy : IConversionPolicy
     {
-        #region Internal Fields
-
-        internal static readonly HashSet<Type> BuildInTypes = new HashSet<Type>
-        {
-            typeof(bool),
-            typeof(byte),
-            typeof(char),
-            typeof(string),
-            typeof(short),
-            typeof(ushort),
-            typeof(int),
-            typeof(uint),
-            typeof(long),
-            typeof(ulong),
-            typeof(float),
-            typeof(double),
-            typeof(decimal),
-            typeof(DateTime),
-            typeof(DateTimeOffset),
-            typeof(TimeSpan),
-            typeof(Guid),
-            typeof(Uri)
-        };
-
-        #endregion
-
         #region IConversionPolicy
 
         /// <summary>
@@ -50,10 +27,11 @@ namespace Morphology.Conversion.Policies
 
             if (converter == null) throw new ArgumentNullException(nameof(converter));
 
-            if (value == null) return false;
-            if (!BuildInTypes.Contains(value.GetType())) return false;
+            var enumerable = value as IEnumerable;
+            if (enumerable == null) return false;
+            if (value.GetType().IsDictionary()) return false;
 
-            result = new ScalarToken(value);
+            result = new SequenceToken(enumerable.Cast<object>().Select(converter.Convert));
             return true;
         }
 
