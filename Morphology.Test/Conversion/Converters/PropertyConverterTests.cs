@@ -132,6 +132,28 @@ namespace Morphology.Test.Conversion.Converters
         }
 
         [Fact]
+        public void Convert_DictionaryKeyIsComplex_ReturnsSequenceToken()
+        {
+            var converter = new PropertyConverter();
+
+            var token = converter.Convert(new Dictionary<A, string> { { new A(), "hello" } });
+
+            Assert.NotNull(token);
+            Assert.IsType<SequenceToken>(token);
+        }
+
+        [Fact]
+        public void Convert_DictionaryKeyIsScalar_ReturnsDictionaryToken()
+        {
+            var converter = new PropertyConverter();
+
+            var token = converter.Convert(new Dictionary<int, string>{{1, "hello"}});
+
+            Assert.NotNull(token);
+            Assert.IsType<DictionaryToken>(token);
+        }
+
+        [Fact]
         public void Convert_Enum_ReturnsScalarToken()
         {
             var converter = new PropertyConverter();

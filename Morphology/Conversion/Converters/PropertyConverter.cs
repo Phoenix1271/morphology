@@ -19,7 +19,7 @@ namespace Morphology.Conversion.Converters
             new ByteArrayConversionPolicy(),
             new DelegateConversionPolicy(),
             new ReflectionTypeConversionPolicy(),
-            //TODO dictionary
+            new DictionaryConversionPolicy(),
             new CollectionConversionPolicy(),
             new StructureConversionPolicy()
         };
