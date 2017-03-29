@@ -6,8 +6,20 @@ using Morphology.Extensions;
 
 namespace Morphology.Conversion.Policies
 {
-    public class StructureConversionPolicy : IConversionPolicy
+    /// <summary>
+    /// Determine if the supplied value is represented as Structure token.
+    /// </summary>
+    internal class StructureConversionPolicy : IConversionPolicy
     {
+        #region IConversionPolicy
+
+        /// <summary>
+        /// If supported, convert the provided value into a <see cref="IPropertyToken"/>.
+        /// </summary>
+        /// <param name="converter">Converter for conversion of additional values.</param>
+        /// <param name="value">The value to convert.</param>
+        /// <param name="result">Value converted to <see cref="IPropertyToken"/> if conversion was successful.</param>
+        /// <returns><c>true</c> if the value could be converted under this policy; <c>false</c> otherwise.</returns>
         public bool TryConvert(IPropertyConverter converter, object value, out IPropertyToken result)
         {
             result = null;
@@ -21,6 +33,10 @@ namespace Morphology.Conversion.Policies
             result = new StructureToken(GetProperties(value, converter), typeName);
             return true;
         }
+
+        #endregion
+
+        #region Private Methods
 
         private IEnumerable<IProperty> GetProperties(object value, IPropertyConverter converter)
         {
@@ -42,11 +58,14 @@ namespace Morphology.Conversion.Policies
                 catch (TargetInvocationException ex)
                 {
                     //TODO Add logging via debug logger
-                    propertyValue = $"The property accessor '{property.DeclaringType.FullName}.{property.Name}' threw an {ex.InnerException.GetType().Name}";
+                    propertyValue =
+                        $"The property accessor '{property.DeclaringType.FullName}.{property.Name}' threw an {ex.InnerException.GetType().Name}";
                 }
 
                 yield return new Property(property.Name, converter.Convert(propertyValue));
             }
         }
+
+        #endregion
     }
 }

@@ -8,9 +8,9 @@
         #region Constructors
 
         /// <summary>
-        /// Construct a <see cref="ScalarToken" /> with the specified value.
+        /// Construct a <see cref="ScalarToken"/> with the specified value.
         /// </summary>
-        /// <param name="value">The value, which may be <see langword="null" />.</param>
+        /// <param name="value">The value, which may be <see langword="null"/>.</param>
         public ScalarToken(object value)
         {
             Value = value;
@@ -21,7 +21,7 @@
         #region Public Properties
 
         /// <summary>
-        /// The value, which may be <see langword="null" />.
+        /// The value, which may be <see langword="null"/>.
         /// </summary>
         public object Value { get; }
 

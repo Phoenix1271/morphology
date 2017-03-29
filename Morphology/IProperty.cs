@@ -1,7 +1,7 @@
 ﻿namespace Morphology
 {
     /// <summary>
-    /// A property model with it's value
+    /// Represents one property with token containing it's value
     /// </summary>
     public interface IProperty
     {

@@ -51,5 +51,15 @@ namespace Morphology.Test.Conversion.Policies
             Assert.NotNull(scalar);
             Assert.Equal(typeof(string).ToString(), scalar.Value);
         }
+
+        [Fact]
+        public void TryConvert_ScalarValue_ReturnsFalse()
+        {
+            var converter = Mock.Of<IPropertyConverter>();
+            var policy = new ReflectionTypeConversionPolicy();
+
+            IPropertyToken token;
+            Assert.False(policy.TryConvert(converter, true, out token));
+        }
     }
 }

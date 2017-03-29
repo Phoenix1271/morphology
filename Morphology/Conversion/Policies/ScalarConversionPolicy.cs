@@ -5,9 +5,9 @@ using Morphology.Conversion.Tokens;
 namespace Morphology.Conversion.Policies
 {
     /// <summary>
-    /// Determine if the supplied value is represented as simple Scalar value.
+    /// Determine if the supplied value is represented as Scalar token.
     /// </summary>
-    public sealed class ScalarConversionPolicy : IConversionPolicy
+    internal sealed class ScalarConversionPolicy : IConversionPolicy
     {
         #region Internal Fields
 
@@ -38,11 +38,11 @@ namespace Morphology.Conversion.Policies
         #region IConversionPolicy
 
         /// <summary>
-        /// If supported, convert the provided value into a <see cref="IPropertyToken" />.
+        /// If supported, convert the provided value into a <see cref="IPropertyToken"/>.
         /// </summary>
         /// <param name="converter">Converter for conversion of additional values.</param>
         /// <param name="value">The value to convert.</param>
-        /// <param name="result">Value converted to <see cref="IPropertyToken" /> if conversion was successful.</param>
+        /// <param name="result">Value converted to <see cref="IPropertyToken"/> if conversion was successful.</param>
         /// <returns><c>true</c> if the value could be converted under this policy; <c>false</c> otherwise.</returns>
         public bool TryConvert(IPropertyConverter converter, object value, out IPropertyToken result)
         {
@@ -52,6 +52,7 @@ namespace Morphology.Conversion.Policies
 
             if (value == null) return false;
             if (!BuildInTypes.Contains(value.GetType())) return false;
+            //TODO feature - add limit on string lenght
 
             result = new ScalarToken(value);
             return true;

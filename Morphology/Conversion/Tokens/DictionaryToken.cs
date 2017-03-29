@@ -11,7 +11,7 @@ namespace Morphology.Conversion.Tokens
         #region Constructors
 
         /// <summary>
-        /// Create a <see cref="DictionaryToken" /> with the provided <paramref name="elements" />.
+        /// Create a <see cref="DictionaryToken"/> with the provided <paramref name="elements"/>.
         /// </summary>
         /// <param name="elements">The elements of the dictionary.</param>
         public DictionaryToken(IEnumerable<KeyValuePair<ScalarToken, IPropertyToken>> elements)

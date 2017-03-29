@@ -12,6 +12,17 @@ namespace Morphology.Test.Conversion.Policies
     public class CollectionConversionPolicyTests
     {
         [Fact]
+        public void TryConvert_DictionaryWithScalarKey_ReturnsFalse()
+        {
+            var value = new Dictionary<string, int>();
+            var converter = Mock.Of<IPropertyConverter>();
+            var policy = new CollectionConversionPolicy();
+
+            IPropertyToken token;
+            Assert.False(policy.TryConvert(converter, value, out token));
+        }
+
+        [Fact]
         public void TryConvert_EmptyArray_ReturnsSequenceToken()
         {
             var value = new int[0];
@@ -23,7 +34,7 @@ namespace Morphology.Test.Conversion.Policies
 
             var sequence = token as SequenceToken;
             Assert.NotNull(sequence);
-            Assert.Equal(0, sequence.Elemenets.Count);
+            Assert.Equal(0, sequence.Elements.Count);
         }
 
         [Fact]
@@ -36,9 +47,9 @@ namespace Morphology.Test.Conversion.Policies
             IPropertyToken token;
             Assert.True(policy.TryConvert(converter, value, out token));
 
-            SequenceToken sequence = token as SequenceToken;
+            var sequence = token as SequenceToken;
             Assert.NotNull(sequence);
-            Assert.Equal(0, sequence.Elemenets.Count);
+            Assert.Equal(0, sequence.Elements.Count);
         }
 
         [Fact]
@@ -57,8 +68,8 @@ namespace Morphology.Test.Conversion.Policies
 
             var sequence = token as SequenceToken;
             Assert.NotNull(sequence);
-            Assert.Equal(1, sequence.Elemenets.Count);
-            Assert.IsType<ScalarToken>(sequence.Elemenets[0]);
+            Assert.Equal(1, sequence.Elements.Count);
+            Assert.IsType<ScalarToken>(sequence.Elements[0]);
         }
 
         [Fact]
@@ -69,7 +80,7 @@ namespace Morphology.Test.Conversion.Policies
                 .Setup(m => m.Convert(It.IsAny<object>()))
                 .Returns<object>(v => new ScalarToken(v));
 
-            var value = new List<int> { 1 };
+            var value = new List<int> {1};
             var converter = converterMock.Object;
             var policy = new CollectionConversionPolicy();
 
@@ -78,8 +89,8 @@ namespace Morphology.Test.Conversion.Policies
 
             var sequence = token as SequenceToken;
             Assert.NotNull(sequence);
-            Assert.Equal(1, sequence.Elemenets.Count);
-            Assert.IsType<ScalarToken>(sequence.Elemenets[0]);
+            Assert.Equal(1, sequence.Elements.Count);
+            Assert.IsType<ScalarToken>(sequence.Elements[0]);
         }
 
         [Fact]

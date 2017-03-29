@@ -18,7 +18,7 @@ namespace Morphology.Test.Conversion.Policies
         [Fact]
         public void TryConvert_DictionaryKeyIsComplex_ReturnsFalse()
         {
-            var value = new Dictionary<ComplexKey, string> { {new ComplexKey(), "hello"} };
+            var value = new Dictionary<ComplexKey, string> {{new ComplexKey(), "hello"}};
             var converter = Mock.Of<IPropertyConverter>();
             var policy = new DictionaryConversionPolicy();
 
@@ -32,7 +32,7 @@ namespace Morphology.Test.Conversion.Policies
             var converterMock = new Mock<IPropertyConverter>();
             converterMock.Setup(m => m.Convert(It.IsAny<object>())).Returns<object>(o => new ScalarToken(o));
 
-            var value = new Dictionary<int, string> { {1, "hello"} };
+            var value = new Dictionary<int, string> {{1, "hello"}};
             var converter = converterMock.Object;
             var policy = new DictionaryConversionPolicy();
 

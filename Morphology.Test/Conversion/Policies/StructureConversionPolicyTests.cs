@@ -129,7 +129,7 @@ namespace Morphology.Test.Conversion.Policies
             IPropertyToken token;
             Assert.True(policy.TryConvert(converter, new object(), out token));
 
-            StructureToken structure = token as StructureToken;
+            var structure = token as StructureToken;
             Assert.NotNull(structure);
             Assert.Equal(typeof(object).Name, structure.TypeName);
             Assert.Equal(0, structure.Properties.Count);

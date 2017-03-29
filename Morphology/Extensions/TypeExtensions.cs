@@ -15,7 +15,7 @@ namespace Morphology.Extensions
             if (type == null) throw new ArgumentNullException(nameof(type));
 
             var visited = new HashSet<string>();
-            TypeInfo typeInfo = type.GetTypeInfo();
+            var typeInfo = type.GetTypeInfo();
 
             while (typeInfo.AsType() != typeof(object))
             {
@@ -24,7 +24,7 @@ namespace Morphology.Extensions
                                 p.GetMethod.IsPublic && !p.GetMethod.IsStatic &&
                                 (p.Name != "Item" || p.GetIndexParameters().Length == 0));
 
-                foreach (PropertyInfo propertyInfo in notVisited)
+                foreach (var propertyInfo in notVisited)
                 {
                     visited.Add(propertyInfo.Name);
                     yield return propertyInfo;
@@ -38,7 +38,7 @@ namespace Morphology.Extensions
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
 
-            TypeInfo typeInfo = type.GetTypeInfo();
+            var typeInfo = type.GetTypeInfo();
             string typeName = type.Name;
 
             //C# Anonymous types always start with "<>" and VB's start with "VB$"

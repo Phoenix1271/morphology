@@ -12,7 +12,8 @@ namespace Morphology.Conversion.Converters
     {
         #region Private Fields
 
-        private static readonly IEnumerable<IConversionPolicy> BuildInPolicies = new IConversionPolicy[]
+        private static readonly IConversionPolicy NullPolicy = new NullConversionPolicy();
+        private static readonly IEnumerable<IConversionPolicy> StandardPolicies = new IConversionPolicy[]
         {
             new ScalarConversionPolicy(),
             new EnumConversionPolicy(),
@@ -24,17 +25,15 @@ namespace Morphology.Conversion.Converters
             new StructureConversionPolicy()
         };
 
-        private static readonly IConversionPolicy NullPolicy = new NullConversionPolicy();
-
         #endregion
 
-        #region IPropertyConverter
+        #region ILimitedConverter
 
         /// <summary>
-        /// Converts supplied value into <see cref="IPropertyToken" />.
+        /// Converts supplied value into <see cref="IPropertyToken"/>.
         /// </summary>
         /// <param name="value">Value to be converted to token.</param>
-        /// <returns><see cref="IPropertyToken" /> for converted value.</returns>
+        /// <returns><see cref="IPropertyToken"/> for converted value.</returns>
         public IPropertyToken Convert(object value)
         {
             //TODO make this dynamically configurable
@@ -42,21 +41,23 @@ namespace Morphology.Conversion.Converters
         }
 
         /// <summary>
-        /// Converts supplied value into <see cref="IPropertyToken" />.
+        /// Converts supplied value into <see cref="IPropertyToken"/>
         /// </summary>
         /// <param name="value">Value to be converted to token.</param>
-        /// <param name="limit">Maximum limit for structure conversion.</param>
-        /// <returns><see cref="IPropertyToken" /> for converted value.</returns>
-        public IPropertyToken Convert(object value, int limit)
+        /// <param name="depthLimit">
+        /// Limits destructuring of the <see cref="value"/> to given depth.
+        /// If the depth is exceeded conversion will return <see cref="ScalarToken"/>
+        /// with <see langword="null"/> null value.
+        /// </param>
+        public IPropertyToken Convert(object value, int depthLimit)
         {
-            //TODO set this to configurable limit if there is invalid value
-            if (limit < 0) limit = 1;
+            if (depthLimit < 0) return new ScalarToken(null);
 
             IPropertyToken result;
             if (NullPolicy.TryConvert(this, value, out result)) return result;
 
-            var limiter = new LimitedConverter(this, limit);
-            foreach (var policy in BuildInPolicies)
+            var limiter = new LimitedConverter(this, depthLimit);
+            foreach (var policy in StandardPolicies)
             {
                 try
                 {

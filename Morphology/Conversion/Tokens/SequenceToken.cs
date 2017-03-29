@@ -11,12 +11,12 @@ namespace Morphology.Conversion.Tokens
         #region Constructors
 
         /// <summary>
-        /// Create a <see cref="SequenceToken" /> with the provided <paramref name="elements" />.
+        /// Create a <see cref="SequenceToken"/> with the provided <paramref name="elements"/>.
         /// </summary>
         /// <param name="elements">The elements of the sequence.</param>
         public SequenceToken(IEnumerable<IPropertyToken> elements)
         {
-            Elemenets = elements.ToArray();
+            Elements = (elements ?? Enumerable.Empty<IPropertyToken>()).ToArray();
         }
 
         #endregion
@@ -26,7 +26,7 @@ namespace Morphology.Conversion.Tokens
         /// <summary>
         /// The elements of the sequence.
         /// </summary>
-        public IReadOnlyList<IPropertyToken> Elemenets { get; }
+        public IReadOnlyList<IPropertyToken> Elements { get; }
 
         #endregion
     }
