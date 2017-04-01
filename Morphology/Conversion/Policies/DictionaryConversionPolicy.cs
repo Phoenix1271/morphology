@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Morphology.Configuration;
 using Morphology.Conversion.Tokens;
 using Morphology.Extensions;
 
@@ -13,6 +14,25 @@ namespace Morphology.Conversion.Policies
     /// </summary>
     internal class DictionaryConversionPolicy : IConversionPolicy
     {
+        #region Private Fields
+
+        private readonly IConversionConfig _config;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates a new <see cref="DictionaryConversionPolicy" />
+        /// </summary>
+        /// <param name="config">Configuration for property conversion.</param>
+        public DictionaryConversionPolicy(IConversionConfig config)
+        {
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+        }
+
+        #endregion
+
         #region IConversionPolicy
 
         /// <summary>
@@ -46,8 +66,13 @@ namespace Morphology.Conversion.Policies
             var keyProperty = typeInfo.GetDeclaredProperty("Key");
             var valueProperty = typeInfo.GetDeclaredProperty("Value");
 
-            var elements = enumerable.Cast<object>()
-                //TODO introduce limit on number of elements
+            var items = enumerable.Cast<object>();
+            if (_config.ItemLimit > 0)
+            {
+                items = items.Take(_config.ItemLimit);
+            }
+
+            var elements = items
                 .Select(kvp =>
                     new KeyValuePair<ScalarToken, IPropertyToken>(
                         (ScalarToken) converter.Convert(keyProperty.GetValue(kvp)),

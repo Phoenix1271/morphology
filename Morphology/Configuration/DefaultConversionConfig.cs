@@ -21,7 +21,7 @@ namespace Morphology.Configuration
                 new ByteArrayConversionPolicy(this),
                 new DelegateConversionPolicy(),
                 new ReflectionTypeConversionPolicy(),
-                new DictionaryConversionPolicy(),
+                new DictionaryConversionPolicy(this),
                 new CollectionConversionPolicy(this),
                 new StructureConversionPolicy()
             };
