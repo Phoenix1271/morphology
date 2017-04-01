@@ -16,6 +16,7 @@ namespace Morphology.Configuration
             StringLimit = 0;
             Policies = new IConversionPolicy[]
             {
+                new StringConversionPolicy(this),
                 new ScalarConversionPolicy(),
                 new EnumConversionPolicy(),
                 new ByteArrayConversionPolicy(this),
