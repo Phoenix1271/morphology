@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Morphology.Configuration;
 using Morphology.Conversion.Tokens;
 
 namespace Morphology.Conversion.Policies
@@ -11,8 +12,20 @@ namespace Morphology.Conversion.Policies
     {
         #region Private Fields
 
-        //TODO this should be somehow dynamically configurable
-        private const int MaximumByteArrayLength = 1024;
+        private readonly IConversionConfig _config;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates a new <see cref="ByteArrayConversionPolicy" />
+        /// </summary>
+        /// <param name="config">Configuration for property conversion.</param>
+        public ByteArrayConversionPolicy(IConversionConfig config)
+        {
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+        }
 
         #endregion
 
@@ -34,17 +47,16 @@ namespace Morphology.Conversion.Policies
             var bytes = value as byte[];
             if (bytes == null) return false;
 
-            if (bytes.Length > MaximumByteArrayLength)
+            //Enforce limit on size of array
+            if (_config.ByteArrayLimit > 0 && bytes.Length > _config.ByteArrayLimit)
             {
                 string hexValue = string.Concat(bytes.Take(16).Select(b => b.ToString("X2")));
                 string description = $"0x: {hexValue}... ({bytes.Length} bytes)";
                 result = new ScalarToken(description);
-            }
-            else
-            {
-                result = new ScalarToken(bytes.ToArray());
+                return true;
             }
 
+            result = new ScalarToken(bytes.ToArray());
             return true;
         }
 

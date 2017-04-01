@@ -6,25 +6,38 @@ namespace Morphology.Configuration
 {
     internal class DefaultConversionConfig : IConversionConfig
     {
+        #region Constructors
+
+        public DefaultConversionConfig()
+        {
+            ByteArrayLimit = 1024;
+            ConversionLimit = 10;
+            ItemLimit = 1000;
+            StringLimit = 0;
+            Policies = new IConversionPolicy[]
+            {
+                new ScalarConversionPolicy(),
+                new EnumConversionPolicy(),
+                new ByteArrayConversionPolicy(this),
+                new DelegateConversionPolicy(),
+                new ReflectionTypeConversionPolicy(),
+                new DictionaryConversionPolicy(),
+                new CollectionConversionPolicy(),
+                new StructureConversionPolicy()
+            };
+        }
+
+        #endregion
+
         #region IConversionConfig
 
-        public int ByteArrayLimit { get; } = 1024;
-        public int ConversionLimit { get; } = 10;
-        public int ItemLimit { get; } = 1000;
+        public int ByteArrayLimit { get; }
+        public int ConversionLimit { get; }
+        public int ItemLimit { get; }
 
-        public IEnumerable<IConversionPolicy> Policies { get; } = new IConversionPolicy[]
-        {
-            new ScalarConversionPolicy(),
-            new EnumConversionPolicy(),
-            new ByteArrayConversionPolicy(),
-            new DelegateConversionPolicy(),
-            new ReflectionTypeConversionPolicy(),
-            new DictionaryConversionPolicy(),
-            new CollectionConversionPolicy(),
-            new StructureConversionPolicy()
-        };
+        public IEnumerable<IConversionPolicy> Policies { get; }
 
-        public int StringLimit { get; } = 0;
+        public int StringLimit { get; }
 
         #endregion
     }
