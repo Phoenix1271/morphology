@@ -11,6 +11,21 @@ namespace Morphology.Conversion.Policies
     /// </summary>
     internal class StructureConversionPolicy : IConversionPolicy
     {
+        #region Private Fields
+
+        private readonly ILogger _logger;
+
+        #endregion
+
+        #region Constructors
+
+        public StructureConversionPolicy(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        #endregion
+
         #region IConversionPolicy
 
         /// <summary>
@@ -52,14 +67,17 @@ namespace Morphology.Conversion.Policies
                 {
                     // These properties will be ignored since they never produce values they're not
                     // of concern to auditing and exceptions can be suppressed.
-                    //TODO Add loging via debug looger: $"The property accessor {property} is a non-default indexer"
+                    _logger.Warning(
+                        $"The property accessor '{property.DeclaringType.FullName}.{property.Name}' is a non-default indexer");
+
                     continue;
                 }
                 catch (TargetInvocationException ex)
                 {
-                    //TODO Add logging via debug logger
-                    propertyValue =
-                        $"The property accessor '{property.DeclaringType.FullName}.{property.Name}' threw an {ex.InnerException.GetType().Name}";
+                    _logger.Error(ex,
+                        $"The property accessor '{property.DeclaringType.FullName}.{property.Name}' threw an {ex.InnerException.GetType().Name}");
+
+                    propertyValue = $"The property accessor threw an exception: {ex.InnerException.GetType().Name}";
                 }
 
                 yield return new Property(property.Name, converter.Convert(propertyValue));

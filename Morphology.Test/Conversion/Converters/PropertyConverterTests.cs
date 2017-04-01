@@ -68,8 +68,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Array_ReturnsSequenceToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(new[] {1, 2, 3});
@@ -81,8 +81,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_ByteArray_ReturnsScalarToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
             var value = Enumerable.Range(0, 10).Select(b => (byte) b).ToArray();
 
@@ -95,8 +95,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_CyclicCollections_DoNotStackOverflow()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
             var value = new C
             {
@@ -116,8 +116,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_CyclicStructure_DoesNotStackOverflow()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
             var value = new A
             {
@@ -134,8 +134,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DateTime_ReturnsScalarToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(DateTime.Now);
@@ -147,8 +147,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DateTimeOffset_ReturnsScalarToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(DateTimeOffset.Now);
@@ -160,8 +160,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Delegate_ReturnsScalarToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
             Action value = Convert_Delegate_ReturnsScalarToken;
 
@@ -174,8 +174,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DepthLimitZero_ReturnsStructureToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
             var value = new Nested
             {
@@ -205,8 +205,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DictionaryKeyIsComplex_ReturnsSequenceToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
             var value = new Dictionary<A, string> {{new A(), "hello"}};
 
@@ -219,8 +219,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DictionaryKeyIsScalar_ReturnsDictionaryToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
             var value = new Dictionary<int, string> {{1, "hello"}};
 
@@ -233,8 +233,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_EmptyPolicy_ReturnsScalarToken()
         {
-            var config = Mock.Of<IConversionConfig>();
             var logger = Mock.Of<ILogger>();
+            var config = Mock.Of<IConversionConfig>();
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(10);
@@ -246,8 +246,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Enum_ReturnsScalarToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(E.Foo);
@@ -271,8 +271,8 @@ namespace Morphology.Test.Conversion.Converters
             var configMock = new Mock<IConversionConfig>();
             configMock.Setup(m => m.Policies).Returns(new[] {policyMock.Object});
 
-            var config = configMock.Object;
             var logger = Mock.Of<ILogger>();
+            var config = configMock.Object;
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(10);
@@ -283,8 +283,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Guid_ReturnsScalarToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(Guid.NewGuid());
@@ -296,8 +296,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Null_ReturnsScalarToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(null);
@@ -309,8 +309,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_ScalarType_ReturnsScalarToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(123);
@@ -322,8 +322,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_SystemType_ReturnsScalarToken()
         {
-            var config = new DefaultConversionConfig();
             var logger = Mock.Of<ILogger>();
+            var config = new DefaultConversionConfig(logger);
             var converter = new PropertyConverter(config, logger);
 
             var token = converter.Convert(typeof(string));

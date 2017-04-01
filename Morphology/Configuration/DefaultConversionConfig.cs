@@ -8,7 +8,7 @@ namespace Morphology.Configuration
     {
         #region Constructors
 
-        public DefaultConversionConfig()
+        public DefaultConversionConfig(ILogger logger)
         {
             ByteArrayLimit = 1024;
             ConversionLimit = 10;
@@ -24,7 +24,7 @@ namespace Morphology.Configuration
                 new ReflectionTypeConversionPolicy(),
                 new DictionaryConversionPolicy(this),
                 new CollectionConversionPolicy(this),
-                new StructureConversionPolicy()
+                new StructureConversionPolicy(logger)
             };
         }
 

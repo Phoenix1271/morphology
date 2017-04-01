@@ -38,16 +38,17 @@ namespace Morphology.Test.Conversion.Policies
         [Fact]
         public void TryConvert_AnonymousType_ReturnsStructureToken()
         {
-            var converterMock = new Mock<IPropertyConverter>();
-            converterMock.Setup(m => m.Convert(It.IsAny<object>())).Returns<object>(o => new ScalarToken(o));
-
+            var logger = Mock.Of<ILogger>();
+            var policy = new StructureConversionPolicy(logger);
             var value = new
             {
                 Foo = Some.String(),
                 Bar = Some.Int()
             };
+
+            var converterMock = new Mock<IPropertyConverter>();
+            converterMock.Setup(m => m.Convert(It.IsAny<object>())).Returns<object>(o => new ScalarToken(o));
             var converter = converterMock.Object;
-            var policy = new StructureConversionPolicy();
 
             IPropertyToken token;
             Assert.True(policy.TryConvert(converter, value, out token));
@@ -61,11 +62,12 @@ namespace Morphology.Test.Conversion.Policies
         [Fact]
         public void TryConvert_GetterThrows_eturnsStructureToken()
         {
+            var logger = Mock.Of<ILogger>();
+            var policy = new StructureConversionPolicy(logger);
+
             var converterMock = new Mock<IPropertyConverter>();
             converterMock.Setup(m => m.Convert(It.IsAny<object>())).Returns<object>(o => new ScalarToken(o));
-
             var converter = converterMock.Object;
-            var policy = new StructureConversionPolicy();
 
             IPropertyToken token;
             Assert.True(policy.TryConvert(converter, new PropertyThrower(), out token));
@@ -83,11 +85,12 @@ namespace Morphology.Test.Conversion.Policies
         [Fact]
         public void TryConvert_NamedIndexerThrows_ReturnsStructureToken()
         {
+            var logger = Mock.Of<ILogger>();
+            var policy = new StructureConversionPolicy(logger);
+
             var converterMock = new Mock<IPropertyConverter>();
             converterMock.Setup(m => m.Convert(It.IsAny<object>())).Returns<object>(o => new ScalarToken(o));
-
             var converter = converterMock.Object;
-            var policy = new StructureConversionPolicy();
 
             IPropertyToken token;
             Assert.True(policy.TryConvert(converter, new IndexerThrower(), out token));
@@ -104,7 +107,8 @@ namespace Morphology.Test.Conversion.Policies
         [Fact]
         public void TryConvert_NullConverter_ThrowsArgumentNullException()
         {
-            var policy = new StructureConversionPolicy();
+            var logger = Mock.Of<ILogger>();
+            var policy = new StructureConversionPolicy(logger);
 
             IPropertyToken token;
             Assert.Throws<ArgumentNullException>(() => policy.TryConvert(null, null, out token));
@@ -113,8 +117,10 @@ namespace Morphology.Test.Conversion.Policies
         [Fact]
         public void TryConvert_NullValue_ReturnsFalse()
         {
+            var logger = Mock.Of<ILogger>();
+            var policy = new StructureConversionPolicy(logger);
+
             var converter = Mock.Of<IPropertyConverter>();
-            var policy = new StructureConversionPolicy();
 
             IPropertyToken token;
             Assert.False(policy.TryConvert(converter, null, out token));
@@ -123,8 +129,10 @@ namespace Morphology.Test.Conversion.Policies
         [Fact]
         public void TryConvert_Object_ReturnsStructureToken()
         {
+            var logger = Mock.Of<ILogger>();
+            var policy = new StructureConversionPolicy(logger);
+
             var converter = Mock.Of<IPropertyConverter>();
-            var policy = new StructureConversionPolicy();
 
             IPropertyToken token;
             Assert.True(policy.TryConvert(converter, new object(), out token));
