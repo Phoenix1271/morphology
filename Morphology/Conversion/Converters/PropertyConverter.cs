@@ -10,16 +10,26 @@ namespace Morphology.Conversion.Converters
     /// </summary>
     public class PropertyConverter : ILimitedConverter
     {
-        private readonly IConversionConfig _config;
-
-        public PropertyConverter(IConversionConfig config)
-        {
-            _config = config;
-        }
-
         #region Private Fields
 
         private static readonly IConversionPolicy NullPolicy = new NullConversionPolicy();
+        private readonly IConversionConfig _config;
+        private readonly ILogger _logger;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates a new <see cref="PropertyConverter" />
+        /// </summary>
+        /// <param name="config">Configuration for property conversion.</param>
+        /// <param name="logger">Logger for logging conversion errors.</param>
+        public PropertyConverter(IConversionConfig config, ILogger logger)
+        {
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
 
         #endregion
 
@@ -58,9 +68,10 @@ namespace Morphology.Conversion.Converters
                 {
                     if (policy.TryConvert(limiter, value, out result)) return result;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //TODO this should be logged
+                    _logger.Error(ex,
+                        $"Exception caught when using policy '{policy.GetType().FullName}' for property conversion of '{value}'.");
                 }
             }
 
