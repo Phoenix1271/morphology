@@ -1,4 +1,7 @@
-﻿using Morphology.Conversion.Tokens;
+﻿using System;
+using Moq;
+using Morphology.Conversion.Tokens;
+using Morphology.Formatting;
 using Xunit;
 
 namespace Morphology.Test.Conversion.Tokens
@@ -6,7 +9,28 @@ namespace Morphology.Test.Conversion.Tokens
     public class StructureTokenTests
     {
         [Fact]
-        public void New_NullProperties_StructureContainsZeroProperties()
+        public void Render_NullFormatter_ThrowsArgumentNullException()
+        {
+            var structure = new StructureToken(null);
+
+            Assert.Throws<ArgumentNullException>(() => structure.Render(null));
+        }
+
+        [Fact]
+        public void Render_SomeFormatter_FormatterIsCalled()
+        {
+            var formatterMock = new Mock<IPropertyFormatter>();
+
+            var formatter = formatterMock.Object;
+            var structure = new StructureToken(null);
+
+            structure.Render(formatter);
+
+            formatterMock.Verify(m => m.Format(structure), Times.Once);
+        }
+
+        [Fact]
+        public void StructureToken_NullProperties_StructureContainsZeroProperties()
         {
             var structure = new StructureToken(null);
 
@@ -14,7 +38,7 @@ namespace Morphology.Test.Conversion.Tokens
         }
 
         [Fact]
-        public void New_TokenSequence_SequenceContainsInputElements()
+        public void StructureToken_TokenSequence_SequenceContainsInputElements()
         {
             var property = new Property("Foo", new ScalarToken(null));
             string typeName = "FooBar";

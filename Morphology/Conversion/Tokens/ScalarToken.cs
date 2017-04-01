@@ -1,4 +1,7 @@
-﻿namespace Morphology.Conversion.Tokens
+﻿using System;
+using Morphology.Formatting;
+
+namespace Morphology.Conversion.Tokens
 {
     /// <summary>
     /// A token representing a simple scalar type.
@@ -24,6 +27,21 @@
         /// The value, which may be <see langword="null"/>.
         /// </summary>
         public object Value { get; }
+
+        #endregion
+
+        #region IPropertyToken
+
+        /// <summary>
+        /// Renders content of property token to specified format.
+        /// </summary>
+        /// <param name="formatter">Formater used to format token's content.</param>
+        public void Render(IPropertyFormatter formatter)
+        {
+            if (formatter == null) throw new ArgumentNullException(nameof(formatter));
+
+            formatter.Format(this);
+        }
 
         #endregion
     }

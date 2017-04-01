@@ -1,4 +1,5 @@
 ﻿using System;
+using Morphology.Formatting;
 
 namespace Morphology
 {
@@ -28,6 +29,17 @@ namespace Morphology
         /// Token associated with the property.
         /// </summary>
         public IPropertyToken Token { get; }
+
+        /// <summary>
+        /// Renders content of property to specified format.
+        /// </summary>
+        /// <param name="formatter">Formater used to format token's content.</param>
+        public void Render(IPropertyFormatter formatter)
+        {
+            if (formatter == null) throw new ArgumentNullException(nameof(formatter));
+
+            formatter.Format(this);
+        }
 
         #endregion
     }
