@@ -22,7 +22,7 @@ namespace Morphology.Configuration
                 new DelegateConversionPolicy(),
                 new ReflectionTypeConversionPolicy(),
                 new DictionaryConversionPolicy(),
-                new CollectionConversionPolicy(),
+                new CollectionConversionPolicy(this),
                 new StructureConversionPolicy()
             };
         }

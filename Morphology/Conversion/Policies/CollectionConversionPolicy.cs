@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Morphology.Configuration;
 using Morphology.Conversion.Tokens;
 using Morphology.Extensions;
 
@@ -11,6 +12,25 @@ namespace Morphology.Conversion.Policies
     /// </summary>
     internal sealed class CollectionConversionPolicy : IConversionPolicy
     {
+        #region Private Fields
+
+        private readonly IConversionConfig _config;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates a new <see cref="ByteArrayConversionPolicy" />
+        /// </summary>
+        /// <param name="config">Configuration for property conversion.</param>
+        public CollectionConversionPolicy(IConversionConfig config)
+        {
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+        }
+
+        #endregion
+
         #region IConversionPolicy
 
         /// <summary>
@@ -30,11 +50,13 @@ namespace Morphology.Conversion.Policies
             if (enumerable == null) return false;
             if (value.GetType().IsDictionary()) return false;
 
-            var elements = enumerable.Cast<object>()
-                //.Take() TODO restrict number of elements from configuration
-                .Select(converter.Convert);
+            var elements = enumerable.Cast<object>();
+            if (_config.ItemLimit > 0)
+            {
+                elements = elements.Take(_config.ItemLimit);
+            }
 
-            result = new SequenceToken(elements);
+            result = new SequenceToken(elements.Select(converter.Convert));
             return true;
         }
 

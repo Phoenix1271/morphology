@@ -36,7 +36,7 @@ namespace Morphology.Configuration
         /// Default value is up to 1000 items from type that implements <see langword="IEnumerable"/>.
         /// </remarks>
         /// <remarks>
-        /// Setting <see cref="ItemLimit"/> to 0 all enumerables will return empty sequences.
+        /// Setting <see cref="ItemLimit"/> to 0 will always return whole sequences.
         /// </remarks>
         int ItemLimit { get; }
 
