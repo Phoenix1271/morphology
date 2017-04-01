@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Morphology.Configuration;
 using Morphology.Conversion.Converters;
 using Morphology.Conversion.Tokens;
 using Xunit;
@@ -65,7 +66,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Array_ReturnsSequenceToken()
         {
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
 
             var token = converter.Convert(new[] {1, 2, 3});
 
@@ -76,10 +78,11 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_ByteArray_ReturnsScalarToken()
         {
-            var bytes = Enumerable.Range(0, 10).Select(b => (byte) b).ToArray();
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
+            var value = Enumerable.Range(0, 10).Select(b => (byte)b).ToArray();
 
-            var token = converter.Convert(bytes);
+            var token = converter.Convert(value);
 
             Assert.NotNull(token);
             Assert.IsType<ScalarToken>(token);
@@ -88,6 +91,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_CyclicCollections_DoNotStackOverflow()
         {
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
             var value = new C
             {
                 D = new D
@@ -96,7 +101,6 @@ namespace Morphology.Test.Conversion.Converters
                 }
             };
             value.D.C.Add(value);
-            var converter = new PropertyConverter();
 
             var token = converter.Convert(value);
 
@@ -107,12 +111,13 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_CyclicStructure_DoesNotStackOverflow()
         {
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
             var value = new A
             {
                 B = new B()
             };
             value.B.A = value;
-            var converter = new PropertyConverter();
 
             var token = converter.Convert(value);
 
@@ -123,7 +128,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DateTime_ReturnsScalarToken()
         {
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
 
             var token = converter.Convert(DateTime.Now);
 
@@ -134,7 +140,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DateTimeOffset_ReturnsScalarToken()
         {
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
 
             var token = converter.Convert(DateTimeOffset.Now);
 
@@ -145,10 +152,11 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Delegate_ReturnsScalarToken()
         {
-            Action del = Convert_Delegate_ReturnsScalarToken;
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
+            Action value = Convert_Delegate_ReturnsScalarToken;
 
-            var token = converter.Convert(del);
+            var token = converter.Convert(value);
 
             Assert.NotNull(token);
             Assert.IsType<ScalarToken>(token);
@@ -157,6 +165,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DepthLimitZero_ReturnsStructureToken()
         {
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
             var value = new Nested
             {
                 Value = 1,
@@ -169,7 +179,6 @@ namespace Morphology.Test.Conversion.Converters
                     }
                 }
             };
-            var converter = new PropertyConverter();
 
             var structure = converter.Convert(value, 0) as StructureToken;
 
@@ -186,8 +195,9 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DictionaryKeyIsComplex_ReturnsSequenceToken()
         {
-            var value = new Dictionary<A, string> {{new A(), "hello"}};
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
+            var value = new Dictionary<A, string> { { new A(), "hello" } };
 
             var token = converter.Convert(value);
 
@@ -198,8 +208,9 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_DictionaryKeyIsScalar_ReturnsDictionaryToken()
         {
-            var value = new Dictionary<int, string> {{1, "hello"}};
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
+            var value = new Dictionary<int, string> { { 1, "hello" } };
 
             var token = converter.Convert(value);
 
@@ -210,7 +221,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Enum_ReturnsScalarToken()
         {
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
 
             var token = converter.Convert(E.Foo);
 
@@ -221,7 +233,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Guid_ReturnsScalarToken()
         {
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
 
             var token = converter.Convert(Guid.NewGuid());
 
@@ -232,7 +245,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_Null_ReturnsScalarToken()
         {
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
 
             var token = converter.Convert(null);
 
@@ -243,7 +257,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_ScalarType_ReturnsScalarToken()
         {
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
 
             var token = converter.Convert(123);
 
@@ -254,7 +269,8 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void Convert_SystemType_ReturnsScalarToken()
         {
-            var converter = new PropertyConverter();
+            var config = new DefaultConversionConfig();
+            var converter = new PropertyConverter(config);
 
             var token = converter.Convert(typeof(string));
 

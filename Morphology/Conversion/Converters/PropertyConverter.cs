@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using Morphology.Configuration;
 using Morphology.Conversion.Policies;
 using Morphology.Conversion.Tokens;
 
@@ -10,20 +10,16 @@ namespace Morphology.Conversion.Converters
     /// </summary>
     public class PropertyConverter : ILimitedConverter
     {
+        private readonly IConversionConfig _config;
+
+        public PropertyConverter(IConversionConfig config)
+        {
+            _config = config;
+        }
+
         #region Private Fields
 
         private static readonly IConversionPolicy NullPolicy = new NullConversionPolicy();
-        private static readonly IEnumerable<IConversionPolicy> StandardPolicies = new IConversionPolicy[]
-        {
-            new ScalarConversionPolicy(),
-            new EnumConversionPolicy(),
-            new ByteArrayConversionPolicy(),
-            new DelegateConversionPolicy(),
-            new ReflectionTypeConversionPolicy(),
-            new DictionaryConversionPolicy(),
-            new CollectionConversionPolicy(),
-            new StructureConversionPolicy()
-        };
 
         #endregion
 
@@ -36,8 +32,7 @@ namespace Morphology.Conversion.Converters
         /// <returns><see cref="IPropertyToken"/> for converted value.</returns>
         public IPropertyToken Convert(object value)
         {
-            //TODO make this dynamically configurable
-            return Convert(value, 5);
+            return Convert(value, _config.ConversionLimit);
         }
 
         /// <summary>
@@ -57,7 +52,7 @@ namespace Morphology.Conversion.Converters
             if (NullPolicy.TryConvert(this, value, out result)) return result;
 
             var limiter = new LimitedConverter(this, depthLimit);
-            foreach (var policy in StandardPolicies)
+            foreach (var policy in _config.Policies)
             {
                 try
                 {
