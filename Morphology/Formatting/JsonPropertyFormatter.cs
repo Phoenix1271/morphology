@@ -6,6 +6,9 @@ using Morphology.Conversion.Tokens;
 
 namespace Morphology.Formatting
 {
+    /// <summary>
+    /// Formats content of properties to JSON output format.
+    /// </summary>
     public class JsonPropertyFormatter : IPropertyFormatter
     {
         #region Private Fields
@@ -17,16 +20,25 @@ namespace Morphology.Formatting
 
         #region Constructors
 
-        public JsonPropertyFormatter(TextWriter output, CultureInfo formatProvider = null)
+        /// <summary>
+        /// Create a <see cref="JsonPropertyFormatter"/> to format tokens into readable output.
+        /// </summary>
+        /// <param name="output">The output where content of property should be written.</param>
+        /// <param name="cultureInfo">Specific culture to be used for formatting.</param>
+        public JsonPropertyFormatter(TextWriter output, CultureInfo cultureInfo = null)
         {
             _output = output ?? throw new ArgumentNullException(nameof(output));
-            _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
+            _formatProvider = cultureInfo ?? CultureInfo.InvariantCulture;
         }
 
         #endregion
 
         #region IPropertyFormatter
 
+        /// <summary>
+        /// Formats content of <see cref="ScalarToken"/>.
+        /// </summary>
+        /// <param name="token">Token to be formatted.</param>
         public void Format(ScalarToken token)
         {
             if (token.Value == null)
@@ -57,6 +69,10 @@ namespace Morphology.Formatting
             _output.Write(f?.ToString(null, _formatProvider) ?? token.Value.ToString());
         }
 
+        /// <summary>
+        /// Formats content of <see cref="DictionaryToken"/>.
+        /// </summary>
+        /// <param name="token">Token to be formatted.</param>
         public void Format(DictionaryToken token)
         {
             _output.Write('[');
@@ -84,6 +100,10 @@ namespace Morphology.Formatting
             _output.Write(']');
         }
 
+        /// <summary>
+        /// Formats content of <see cref="SequenceToken"/>.
+        /// </summary>
+        /// <param name="token">Token to be formatted.</param>
         public void Format(SequenceToken token)
         {
             _output.Write('[');
@@ -103,6 +123,10 @@ namespace Morphology.Formatting
             _output.Write(']');
         }
 
+        /// <summary>
+        /// Formats content of <see cref="StructureToken"/>.
+        /// </summary>
+        /// <param name="token">Token to be formatted.</param>
         public void Format(StructureToken token)
         {
             if (token.TypeName != null)
@@ -127,6 +151,10 @@ namespace Morphology.Formatting
             _output.Write(" }");
         }
 
+        /// <summary>
+        /// Formats content of <see cref="PropertyToken"/>.
+        /// </summary>
+        /// <param name="property">Token to be formatted.</param>
         public void Format(PropertyToken property)
         {
             _output.Write($"\"{property.Name}\": ");

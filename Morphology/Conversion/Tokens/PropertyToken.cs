@@ -10,6 +10,11 @@ namespace Morphology.Conversion.Tokens
     {
         #region Constructors
 
+        /// <summary>
+        /// Create a <see cref="PropertyToken"/> with the provided name and value.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value of the property.</param>
         internal PropertyToken(string name, IPropertyToken value)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
