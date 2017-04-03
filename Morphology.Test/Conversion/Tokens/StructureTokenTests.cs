@@ -40,7 +40,7 @@ namespace Morphology.Test.Conversion.Tokens
         [Fact]
         public void StructureToken_TokenSequence_SequenceContainsInputElements()
         {
-            var property = new Property("Foo", new ScalarToken(null));
+            var property = new PropertyToken("Foo", new ScalarToken(null));
             string typeName = "FooBar";
 
             var structure = new StructureToken(new[] {property}, typeName);

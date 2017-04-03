@@ -21,7 +21,7 @@ namespace Morphology.Conversion.Converters
         #region Constructors
 
         /// <summary>
-        /// Creates a new <see cref="PropertyConverter" />
+        /// Creates a new <see cref="PropertyConverter"/>
         /// </summary>
         /// <param name="config">Configuration for property conversion.</param>
         /// <param name="logger">Logger for logging conversion errors.</param>

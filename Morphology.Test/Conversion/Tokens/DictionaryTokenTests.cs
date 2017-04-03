@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Moq;
+using Morphology.Conversion;
 using Morphology.Conversion.Tokens;
 using Morphology.Formatting;
 using Xunit;

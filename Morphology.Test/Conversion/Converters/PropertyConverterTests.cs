@@ -197,7 +197,7 @@ namespace Morphology.Test.Conversion.Converters
             Assert.Equal(nameof(Nested.Next), structure.Properties[0].Name);
             Assert.Equal(nameof(Nested.Value), structure.Properties[1].Name);
 
-            var scalar = structure.Properties[0].Token as ScalarToken;
+            var scalar = structure.Properties[0].Value as ScalarToken;
             Assert.NotNull(scalar);
             Assert.Null(scalar.Value);
         }

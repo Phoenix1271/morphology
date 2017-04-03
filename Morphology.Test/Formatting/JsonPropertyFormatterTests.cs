@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using Morphology.Conversion;
 using Morphology.Conversion.Tokens;
 using Morphology.Formatting;
 using Morphology.Test.Support;
@@ -161,11 +162,11 @@ namespace Morphology.Test.Formatting
         }
 
         [Fact]
-        public void Render_Property_IsFormattedAsProperty()
+        public void Render_PropertyToken_IsFormattedAsProperty()
         {
             var output = new StringWriter();
             var formater = new JsonPropertyFormatter(output);
-            var property = new Property("property", new ScalarToken(1));
+            var property = new PropertyToken("property", new ScalarToken(1));
 
             property.Render(formater);
 
@@ -179,8 +180,8 @@ namespace Morphology.Test.Formatting
             var formater = new JsonPropertyFormatter(output);
             var token = new StructureToken(new[]
             {
-                new Property("Foo", new ScalarToken(1)),
-                new Property("Bar", new ScalarToken("bar"))
+                new PropertyToken("Foo", new ScalarToken(1)),
+                new PropertyToken("Bar", new ScalarToken("bar"))
             }, "MyType");
 
 

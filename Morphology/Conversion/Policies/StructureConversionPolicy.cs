@@ -53,7 +53,7 @@ namespace Morphology.Conversion.Policies
 
         #region Private Methods
 
-        private IEnumerable<IProperty> GetProperties(object value, IPropertyConverter converter)
+        private IEnumerable<PropertyToken> GetProperties(object value, IPropertyConverter converter)
         {
             foreach (var property in value.GetType().GetDerivedProperties())
             {
@@ -80,7 +80,7 @@ namespace Morphology.Conversion.Policies
                     propertyValue = $"The property accessor threw an exception: {ex.InnerException.GetType().Name}";
                 }
 
-                yield return new Property(property.Name, converter.Convert(propertyValue));
+                yield return new PropertyToken(property.Name, converter.Convert(propertyValue));
             }
         }
 

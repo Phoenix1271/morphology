@@ -19,9 +19,9 @@ namespace Morphology.Conversion.Tokens
         /// <param name="typeName">
         /// Optionally, a piece of metadata describing the "type" of the structure.
         /// </param>
-        public StructureToken(IEnumerable<IProperty> properties, string typeName = null)
+        public StructureToken(IEnumerable<PropertyToken> properties, string typeName = null)
         {
-            Properties = (properties ?? Enumerable.Empty<IProperty>()).ToArray();
+            Properties = (properties ?? Enumerable.Empty<PropertyToken>()).ToArray();
             TypeName = typeName;
         }
 
@@ -37,7 +37,7 @@ namespace Morphology.Conversion.Tokens
         /// relatively expensive; it is cheaper to build a dictionary over properties
         /// only when the structure is of interest.
         /// </remarks>
-        public IReadOnlyList<IProperty> Properties { get; }
+        public IReadOnlyList<PropertyToken> Properties { get; }
 
         /// <summary>
         /// A piece of metadata describing the "type" of the

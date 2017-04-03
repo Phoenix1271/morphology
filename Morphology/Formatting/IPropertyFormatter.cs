@@ -1,4 +1,5 @@
-﻿using Morphology.Conversion.Tokens;
+﻿using Morphology.Conversion;
+using Morphology.Conversion.Tokens;
 
 namespace Morphology.Formatting
 {
@@ -7,6 +8,8 @@ namespace Morphology.Formatting
     /// </summary>
     public interface IPropertyFormatter
     {
+        #region Public Methods
+
         /// <summary>
         /// Formats content of <see cref="ScalarToken"/>.
         /// </summary>
@@ -32,9 +35,11 @@ namespace Morphology.Formatting
         void Format(StructureToken token);
 
         /// <summary>
-        /// Formats content of <see cref="StructureToken"/>.
+        /// Formats content of <see cref="PropertyToken"/>.
         /// </summary>
-        /// <param name="property">Property to be formatted.</param>
-        void Format(IProperty property);
+        /// <param name="property">Token to be formatted.</param>
+        void Format(PropertyToken property);
+
+        #endregion
     }
 }

@@ -77,9 +77,9 @@ namespace Morphology.Test.Conversion.Policies
             Assert.Equal(nameof(PropertyThrower), structure.TypeName);
             Assert.Equal(2, structure.Properties.Count);
             Assert.Equal(nameof(PropertyThrower.Doesnt), structure.Properties[0].Name);
-            Assert.IsType<ScalarToken>(structure.Properties[0].Token);
+            Assert.IsType<ScalarToken>(structure.Properties[0].Value);
             Assert.Equal(nameof(PropertyThrower.Throws), structure.Properties[1].Name);
-            Assert.IsType<ScalarToken>(structure.Properties[1].Token);
+            Assert.IsType<ScalarToken>(structure.Properties[1].Value);
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Morphology.Test.Conversion.Policies
             Assert.Equal(nameof(IndexerThrower), structure.TypeName);
             Assert.Equal(1, structure.Properties.Count);
             Assert.Equal(nameof(IndexerThrower.Doesnt), structure.Properties[0].Name);
-            Assert.IsType<ScalarToken>(structure.Properties[0].Token);
+            Assert.IsType<ScalarToken>(structure.Properties[0].Value);
         }
 
 

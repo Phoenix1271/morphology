@@ -21,7 +21,7 @@ namespace Morphology.Conversion.Policies
         #region Constructors
 
         /// <summary>
-        /// Creates a new <see cref="ByteArrayConversionPolicy" />
+        /// Creates a new <see cref="ByteArrayConversionPolicy"/>
         /// </summary>
         /// <param name="config">Configuration for property conversion.</param>
         public CollectionConversionPolicy(IConversionConfig config)

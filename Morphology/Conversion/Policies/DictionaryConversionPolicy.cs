@@ -23,7 +23,7 @@ namespace Morphology.Conversion.Policies
         #region Constructors
 
         /// <summary>
-        /// Creates a new <see cref="DictionaryConversionPolicy" />
+        /// Creates a new <see cref="DictionaryConversionPolicy"/>
         /// </summary>
         /// <param name="config">Configuration for property conversion.</param>
         public DictionaryConversionPolicy(IConversionConfig config)

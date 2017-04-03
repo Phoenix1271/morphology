@@ -1,24 +1,26 @@
 ﻿using System;
 using Morphology.Formatting;
 
-namespace Morphology
+namespace Morphology.Conversion.Tokens
 {
     /// <summary>
-    /// Represents one property with token containing it's value
+    /// A token representing property with it's value.
     /// </summary>
-    public class Property : IProperty
+    public class PropertyToken : IPropertyToken
     {
         #region Constructors
 
-        internal Property(string name, IPropertyToken token)
+        internal PropertyToken(string name, IPropertyToken value)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Token = token ?? throw new ArgumentNullException(nameof(token));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            Name = name;
+            Value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         #endregion
 
-        #region IProperty
+        #region Public Properties
 
         /// <summary>
         /// The name of the property.
@@ -26,9 +28,13 @@ namespace Morphology
         public string Name { get; }
 
         /// <summary>
-        /// Token associated with the property.
+        /// Value associated with the property.
         /// </summary>
-        public IPropertyToken Token { get; }
+        public IPropertyToken Value { get; }
+
+        #endregion
+
+        #region IPropertyToken
 
         /// <summary>
         /// Renders content of property to specified format.

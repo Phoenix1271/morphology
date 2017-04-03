@@ -25,7 +25,7 @@ namespace Morphology.Formatting
 
         #endregion
 
-        #region IPropertyFormater
+        #region IPropertyFormatter
 
         public void Format(ScalarToken token)
         {
@@ -96,10 +96,11 @@ namespace Morphology.Formatting
             }
 
             if (token.Elements.Count > 0)
+            {
                 token.Elements[token.Elements.Count - 1].Render(this);
+            }
 
             _output.Write(']');
-
         }
 
         public void Format(StructureToken token)
@@ -126,10 +127,10 @@ namespace Morphology.Formatting
             _output.Write(" }");
         }
 
-        public void Format(IProperty property)
+        public void Format(PropertyToken property)
         {
             _output.Write($"\"{property.Name}\": ");
-            property.Token.Render(this);
+            property.Value.Render(this);
         }
 
         #endregion

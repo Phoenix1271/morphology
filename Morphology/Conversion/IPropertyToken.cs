@@ -1,6 +1,6 @@
 ﻿using Morphology.Formatting;
 
-namespace Morphology
+namespace Morphology.Conversion
 {
     /// <summary>
     /// A token representing some property of the object.
