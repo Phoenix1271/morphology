@@ -54,9 +54,13 @@ namespace Morphology.Templating
 
             var options = RegexOptions.ExplicitCapture | RegexOptions.CultureInvariant;
 
+#if NET45 || NET46 || NETSTANDARD1_3
+            options |= RegexOptions.Compiled;
+#endif
+
             return new Regex(templatePattern, options);
         }
 
-        #endregion
+#endregion
     }
 }
