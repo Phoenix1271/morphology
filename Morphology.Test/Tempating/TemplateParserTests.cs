@@ -132,7 +132,7 @@ namespace Morphology.Test.Tempating
             var token = tokens[0] as HoleToken;
             Assert.NotNull(token);
             Assert.Equal(0, token.Index);
-            Assert.Equal(null, token.Name);
+            Assert.Equal("{0}", token.Name);
         }
 
         [Fact]

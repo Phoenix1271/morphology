@@ -7,20 +7,26 @@ namespace Morphology.Templating.Tokens
     /// Token representing a hole in the text template.
     /// </summary>
     /// <seealso cref="Morphology.Templating.ITemplateToken"/>
-    internal sealed class HoleToken : ITemplateToken
+    public sealed class HoleToken : ITemplateToken
     {
+        #region Private Fields
+
+        private readonly string _name;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HoleToken"/> class.
         /// </summary>
         /// <param name="match">The RegEx match for hole token.</param>
-        public HoleToken(Match match)
+        internal HoleToken(Match match)
         {
             RawValue = match.Value;
 
             string name = match.Groups["name"].Value.Trim();
-            Name = !string.IsNullOrWhiteSpace(name) ? name : null;
+            _name = !string.IsNullOrWhiteSpace(name) ? name : null;
 
             string format = match.Groups["format"].Value.Trim();
             Format = !string.IsNullOrWhiteSpace(format) ? format : null;
@@ -75,7 +81,7 @@ namespace Morphology.Templating.Tokens
         /// <summary>
         /// Gets the name of the substitute property.
         /// </summary>
-        public string Name { get; }
+        public string Name => _name ?? RawValue;
 
         #endregion
 

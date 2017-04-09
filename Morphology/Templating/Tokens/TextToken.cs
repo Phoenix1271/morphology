@@ -6,7 +6,7 @@ namespace Morphology.Templating.Tokens
     /// Represents text token in the text template.
     /// </summary>
     /// <seealso cref="Morphology.Templating.ITemplateToken" />
-    internal sealed class TextToken : ITemplateToken
+    public sealed class TextToken : ITemplateToken
     {
         #region Constructors
 
@@ -14,7 +14,7 @@ namespace Morphology.Templating.Tokens
         /// Initializes a new instance of the <see cref="TextToken"/> class.
         /// </summary>
         /// <param name="match">The RegEx match for text token.</param>
-        public TextToken(Match match)
+        internal TextToken(Match match)
         {
             RawValue = match.Value;
         }
@@ -23,7 +23,7 @@ namespace Morphology.Templating.Tokens
         /// Initializes a new instance of the <see cref="TextToken"/> class.
         /// </summary>
         /// <param name="rawValue">The raw value of text token.</param>
-        public TextToken(string rawValue)
+        internal TextToken(string rawValue)
         {
             RawValue = rawValue ?? string.Empty;
         }
