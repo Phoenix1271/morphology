@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Morphology.Test.Conversion.Converters
 {
-    public class PropertyConverterTests
+    public class StructuralConverterTests
     {
         private class A
         {
@@ -70,7 +70,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(new[] {1, 2, 3});
 
@@ -83,7 +83,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
             var value = Enumerable.Range(0, 10).Select(b => (byte) b).ToArray();
 
             var token = converter.Convert(value);
@@ -97,7 +97,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
             var value = new C
             {
                 D = new D
@@ -118,7 +118,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
             var value = new A
             {
                 B = new B()
@@ -136,7 +136,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(DateTime.Now);
 
@@ -149,7 +149,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(DateTimeOffset.Now);
 
@@ -162,7 +162,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
             Action value = Convert_Delegate_ReturnsScalarToken;
 
             var token = converter.Convert(value);
@@ -176,7 +176,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
             var value = new Nested
             {
                 Value = 1,
@@ -207,7 +207,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
             var value = new Dictionary<A, string> {{new A(), "hello"}};
 
             var token = converter.Convert(value);
@@ -221,7 +221,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
             var value = new Dictionary<int, string> {{1, "hello"}};
 
             var token = converter.Convert(value);
@@ -235,7 +235,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = Mock.Of<IConversionConfig>();
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(10);
 
@@ -248,7 +248,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(E.Foo);
 
@@ -273,7 +273,7 @@ namespace Morphology.Test.Conversion.Converters
 
             var logger = Mock.Of<ILogger>();
             var config = configMock.Object;
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(10);
 
@@ -285,7 +285,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(Guid.NewGuid());
 
@@ -298,7 +298,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(null);
 
@@ -311,7 +311,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(123);
 
@@ -324,7 +324,7 @@ namespace Morphology.Test.Conversion.Converters
         {
             var logger = Mock.Of<ILogger>();
             var config = new DefaultConversionConfig(logger);
-            var converter = new PropertyConverter(config, logger);
+            var converter = new StructuralConverter(config, logger);
 
             var token = converter.Convert(typeof(string));
 
@@ -335,13 +335,13 @@ namespace Morphology.Test.Conversion.Converters
         [Fact]
         public void PropertyConverter_NullConfig_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new PropertyConverter(null, Mock.Of<ILogger>()));
+            Assert.Throws<ArgumentNullException>(() => new StructuralConverter(null, Mock.Of<ILogger>()));
         }
 
         [Fact]
         public void PropertyConverter_NullLogger_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new PropertyConverter(Mock.Of<IConversionConfig>(), null));
+            Assert.Throws<ArgumentNullException>(() => new StructuralConverter(Mock.Of<IConversionConfig>(), null));
         }
     }
 }

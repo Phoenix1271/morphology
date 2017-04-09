@@ -6,7 +6,7 @@ namespace Morphology.Conversion.Converters
     /// <summary>
     /// Limits destructuring of the object to certain depth.
     /// </summary>
-    public class LimitedConverter : ILimitedConverter
+    internal class LimitedConverter : ILimitedConverter
     {
         #region Private Fields
 

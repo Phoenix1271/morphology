@@ -8,7 +8,7 @@ namespace Morphology.Conversion.Converters
     /// <summary>
     /// Destructurizes given object to <see cref="IPropertyToken"/>.
     /// </summary>
-    public class PropertyConverter : ILimitedConverter
+    internal class StructuralConverter : ILimitedConverter
     {
         #region Private Fields
 
@@ -21,11 +21,11 @@ namespace Morphology.Conversion.Converters
         #region Constructors
 
         /// <summary>
-        /// Creates a new <see cref="PropertyConverter"/>
+        /// Creates a new <see cref="StructuralConverter"/>
         /// </summary>
         /// <param name="config">Configuration for property conversion.</param>
         /// <param name="logger">Logger for logging conversion errors.</param>
-        public PropertyConverter(IConversionConfig config, ILogger logger)
+        public StructuralConverter(IConversionConfig config, ILogger logger)
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
