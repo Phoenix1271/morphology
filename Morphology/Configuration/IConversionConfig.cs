@@ -30,6 +30,15 @@ namespace Morphology.Configuration
         int ConversionLimit { get; }
 
         /// <summary>
+        /// Default type of conversion to perform on object if there is no destructuring hint.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 'Destructure'
+        /// </remarks>
+        /// <seealso cref="ConversionType"/>
+        ConversionType ConversionType { get; }
+
+        /// <summary>
         /// Limits the number of items that are processed from types that implements <see langword="IEnumerable"/>.
         /// </summary>
         /// <remarks>

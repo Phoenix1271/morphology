@@ -10,7 +10,7 @@ namespace Morphology.Test.Tempating
     public class TemplateParserTests
     {
         [Fact]
-        public void Parse_ConversionHintIsInvalid_TokenHasDefaultHint()
+        public void Parse_ConversionHintIsInvalid_TokenHasNullHint()
         {
             var tokens = TemplateParser.Parse("{?Invalid}").ToArray();
             Assert.Equal(1, tokens.Length);
@@ -18,7 +18,7 @@ namespace Morphology.Test.Tempating
             var token = tokens[0] as HoleToken;
             Assert.NotNull(token);
             Assert.Equal("Invalid", token.Name);
-            Assert.Equal(ConversionHint.Default, token.ConversionHint);
+            Assert.Null(token.ConversionHint);
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace Morphology.Test.Tempating
             var token = tokens[0] as HoleToken;
             Assert.NotNull(token);
             Assert.Equal("Stringify", token.Name);
-            Assert.Equal(ConversionHint.String, token.ConversionHint);
+            Assert.Equal(ConversionType.Stringify, token.ConversionHint);
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace Morphology.Test.Tempating
             var token = tokens[0] as HoleToken;
             Assert.NotNull(token);
             Assert.Equal("Destructure", token.Name);
-            Assert.Equal(ConversionHint.Structure, token.ConversionHint);
+            Assert.Equal(ConversionType.Destructure, token.ConversionHint);
         }
 
         [Fact]

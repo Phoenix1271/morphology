@@ -39,13 +39,13 @@ namespace Morphology.Templating.Tokens
             switch (hint)
             {
                 case "$":
-                    ConversionHint = ConversionHint.String;
+                    ConversionHint = ConversionType.Stringify;
                     break;
                 case "@":
-                    ConversionHint = ConversionHint.Structure;
+                    ConversionHint = ConversionType.Destructure;
                     break;
                 default:
-                    ConversionHint = ConversionHint.Default;
+                    ConversionHint = null;
                     break;
             }
 
@@ -66,7 +66,7 @@ namespace Morphology.Templating.Tokens
         /// <summary>
         /// Gets the conversion hint for object serialization.
         /// </summary>
-        public ConversionHint ConversionHint { get; }
+        public ConversionType? ConversionHint { get; }
 
         /// <summary>
         /// Gets the format for text literal.

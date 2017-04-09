@@ -12,6 +12,7 @@ namespace Morphology.Configuration
         {
             ByteArrayLimit = 1024;
             ConversionLimit = 10;
+            ConversionType = ConversionType.Destructure;
             ItemLimit = 1000;
             StringLimit = 0;
             Policies = new IConversionPolicy[]
@@ -34,10 +35,9 @@ namespace Morphology.Configuration
 
         public int ByteArrayLimit { get; }
         public int ConversionLimit { get; }
+        public ConversionType ConversionType { get; }
         public int ItemLimit { get; }
-
         public IEnumerable<IConversionPolicy> Policies { get; }
-
         public int StringLimit { get; }
 
         #endregion
