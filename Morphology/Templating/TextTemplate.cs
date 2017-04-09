@@ -22,11 +22,11 @@ namespace Morphology.Templating
         /// <summary>
         /// Initializes a new instance of the <see cref="TextTemplate"/> class.
         /// </summary>
-        /// <param name="temmplate">The underlying text temmplate.</param>
+        /// <param name="template">The underlying text temmplate.</param>
         /// <param name="tokens">The tokens that belong to given text template.</param>
-        internal TextTemplate(string temmplate, IEnumerable<ITemplateToken> tokens)
+        internal TextTemplate(string template, IEnumerable<ITemplateToken> tokens)
         {
-            Template = temmplate;
+            Template = template;
             Tokens = tokens.ToArray();
         }
 
