@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Morphology.Collections;
 using Morphology.Configuration;
 using Morphology.Conversion;
 using Morphology.Conversion.Tokens;
@@ -16,6 +17,7 @@ namespace Morphology.Templating
 
         private static readonly ScalarToken TokenNotBound = new ScalarToken("<Property not bound>");
 
+        private readonly Cache<string, TextTemplate> _cache;
         private readonly PropertyConverterFactory _factory;
         private readonly ILogger _logger;
 
@@ -30,6 +32,9 @@ namespace Morphology.Templating
         /// <param name="logger">Logger for logging conversion errors.</param>
         public TemplateProcessor(IConversionConfig config, ILogger logger)
         {
+            //TODO cached items could be configured
+            _cache = new Cache<string, TextTemplate>();
+            //TODO just factory is needed - not the config
             _factory = new PropertyConverterFactory(config, logger);
             _logger = logger;
         }
@@ -48,9 +53,11 @@ namespace Morphology.Templating
         {
             if (message == null) message = string.Empty;
 
-            //TODO This can be cached
-            var tokens = TemplateParser.Parse(message);
-            var template = new TextTemplate(message, tokens);
+            var template = _cache.Fetch(message, () =>
+            {
+                var tokens = TemplateParser.Parse(message);
+                return new TextTemplate(message, tokens);
+            });
 
             var boundTokens = BindParameters(template, parameters);
             return new TextTemplate(template.Template, boundTokens);
@@ -96,7 +103,6 @@ namespace Morphology.Templating
                     yield return new BoundToken(hole, new PropertyToken(hole.Name, TokenNotBound));
                     continue;
                 }
-
 
                 var converter = _factory.Create(hole.ConversionHint);
                 var propertyToken = converter.Convert(parameters[position]);
