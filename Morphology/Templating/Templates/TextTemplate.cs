@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Morphology.Templating
+namespace Morphology.Templating.Templates
 {
     /// <summary>
     /// Represent text template for given message
@@ -9,15 +9,6 @@ namespace Morphology.Templating
     public class TextTemplate
     {
         #region Constructors
-
-        /// <summary>
-        /// Copy constructor that initializes a new instance of the <see cref="TextTemplate"/> class.
-        /// </summary>
-        internal TextTemplate(TextTemplate template)
-        {
-            Template = template.Template;
-            Tokens = template.Tokens;
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextTemplate"/> class.
